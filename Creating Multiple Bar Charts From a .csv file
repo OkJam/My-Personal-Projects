@@ -1,0 +1,63 @@
+# Import necessary packages
+import matplotlib.pyplot as plt
+import pandas as pd
+import numpy as np
+
+#Import the data
+ReliaData = pd.read_csv(r'C:\Users\James ok\Desktop\Desktop2\RELIABILITY_RESEARCH\ReliaDat.csv', parse_dates=['date'], index_col = ['date'])
+
+#Add to data frame and print the first 5 rows
+ReliaData = pd.DataFrame(ReliaData)
+ReliaData.head()
+
+#Convert the np index to numpy (This will help us adjust the bar position)
+X_axis = np.arange(len(ReliaData.index.values))
+
+# Create figure and plot space
+fig, ax = plt.subplots(figsize=(30, 35),)
+
+w = 0.08
+
+IKENEGBU = ReliaData['IKENEGBU_SAIDI']
+FUT = ReliaData['SAIDI']
+EGBU = ReliaData['SAIDI.1']
+NEW_OWERRI = ReliaData['SAIDI.2']
+NAZE = ReliaData['SAIDI.3']
+GRA = ReliaData['SAIDI.4']
+TOWNSHIP = ReliaData['SAIDI.5']
+IFAKALA = ReliaData['SAIDI.6']
+MBIERRI = ReliaData['SAIDI.7']
+URLU = ReliaData['SAIDI.8']
+
+# Add x-axis and y-axis
+ax.barh(X_axis-0.5, IKENEGBU, w, color='w' , align='center', label = 'IKENEGBU',edgecolor = 'black',linewidth=3)
+ax.barh(X_axis-0.42, FUT, w, color='g', align='center', hatch = '||', label = 'FUT',edgecolor = 'black',linewidth=3)
+ax.barh(X_axis-0.34,EGBU , w, color='r', align='center',  hatch = '\\', label = 'EGBU',edgecolor = 'black',linewidth=3)
+ax.barh(X_axis-0.26,NEW_OWERRI , w, color='b', align='center',  hatch = '*', label = 'NEW OWERRI',edgecolor = 'black',linewidth=3)
+ax.barh(X_axis-0.18,NAZE , w, color='y', align='center',  hatch = 'O', label = 'NAZE',edgecolor = 'black',linewidth=3)
+ax.barh(X_axis-0.1,GRA , w, color='0.8', align='center', hatch = '///', label = 'GRA',edgecolor = 'black',linewidth=3)
+ax.barh(X_axis-0.02,TOWNSHIP , w, color='w', align='center', hatch = '+', label = 'TOWNSHIP',edgecolor = 'black',linewidth=3)
+ax.barh(X_axis+0.06,IFAKALA, w, color='w', align='center', hatch = 'x', label = 'IFAKALA',edgecolor = 'black',linewidth=3)
+ax.barh(X_axis+0.14,MBIERRI , w, color='c', align='center', hatch = 'oo', label = 'MBIERRI',edgecolor = 'black',linewidth=3)
+ax.barh(X_axis+0.22,URLU, w, color='w', align='center', hatch = '/', label = 'URLU 33KVA',edgecolor = 'black',linewidth=3)
+ax.set_axisbelow(True)
+
+#Add only horizontal grid
+ax.grid(which="major", axis='x')
+
+#Define x and y ticks
+major_tick = range(50,800, 50)
+ax.set_xticks(major_tick) # Grid
+plt.tick_params(labelsize=30,grid_linewidth=2)
+plt.yticks(X_axis, ReliaData.index.values, fontsize = 30)
+
+#Define x and y labels
+plt.xlabel("SAIDI", fontsize = 30,fontweight='bold')
+plt.ylabel("MONTHS",rotation=90, fontsize = 30,fontweight='bold')
+#Add legend
+plt.legend(loc="lower center", bbox_to_anchor=[0.5, -0.12],ncol=len(ReliaData.columns), shadow=False, title="LEGEND", fancybox=True, fontsize = 23)
+
+plt.title("Figure 7: SAIDI (Comparative Monthly System Average Interruption Duration Index for the Study Period)", fontsize=35, y=-0.15)
+plt.axis('tight')
+plt.show()
+
